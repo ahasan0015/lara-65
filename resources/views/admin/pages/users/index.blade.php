@@ -31,6 +31,7 @@
                 <td>{{ $item['role'] }}</td>
                 <td>
                     <a href="{{ route('users.show', $item['id']) }}" class="btn btn-dark">Details</a>
+                    <a href="{{ route('users.edit', ['id' => $item['id'], 'page'=>request('page',1)]) }}" class="btn btn-success">Edit</a>
 
                     <form action="{{ route('users.destroy', $item['id']) }}" method="POST" class="d-inline">
                         @csrf

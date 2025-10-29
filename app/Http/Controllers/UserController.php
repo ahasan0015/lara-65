@@ -73,6 +73,14 @@ class UserController extends Controller
         // dd($roles);
         return view('admin.pages.users.create', compact('roles'));
     }
+    public function edit($id)
+    {
+        $user =User::find($id);
+        $roles = Role::all();
+        $page =request('page',1);
+        // dd($page);`
+        return view('admin.pages.users.edit', compact('roles','user', 'page'));
+    }
 
     public function store(Request $request)
     {
@@ -93,7 +101,7 @@ class UserController extends Controller
             'password' => ['required', 'min:6', 'confirmed'],
         ]);
 
-        dd($request->all());
+        // dd($request->all());
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -101,7 +109,26 @@ class UserController extends Controller
             'password' => $request->password,
             'role_id' => $request->role_id
         ]);
-        dd($user);
-        // return redirect()->route('users.index')->with('success', 'User created successfully!');
+        // dd($user);
+        return redirect()->route('users.index')->with('success', 'User created successfully!');
+    }
+    public function update(Request $request, $id)
+    {
+      
+        $request->validate([
+            'first_name' => 'required|min:2|max:20',
+            'last_name' => ['required', 'min:2', 'max:20'],
+           
+        ]);
+
+        // dd($request->all());
+        $user=User::find($id);
+        $user->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'role_id' => $request->role_id
+        ]);
+        // dd($user);
+        return redirect()->route('users.index',['page' => $request->page])->with('success', 'User Updated successfully!');
     }
 }
