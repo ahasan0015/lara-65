@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('last_name')->length(100);
             $table->string('email')->unique();
             $table->integer('role_id');
+            $table->string('photo')->nullable()->default(null);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -37,7 +38,7 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
-    }
+    } 
 
     /**
      * Reverse the migrations.
